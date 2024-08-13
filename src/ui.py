@@ -15,20 +15,20 @@ layout.split(
 )
 
 layout["header"].update(Panel(
-    "Asistente de Voz AI",
+    "UI voice Assistant",
     border_style="bold magenta",
     box=box.DOUBLE
 ))
 
 layout["footer"].update(Panel(
-    "Presiona 'C' para iniciar/detener la grabación, 'V' para detener la reproducción de audio",
+    "Press 'C' to start/stop the recording, 'V' to stop the audio playback",
     border_style="bold cyan",
     box=box.DOUBLE
 ))
 
 conversation_panel = Panel(
-    Text("Inicia la conversación...", style="italic"),
-    title="Conversación",
+    Text("Start the conversation...", style="italic"),
+    title="Conversation",
     border_style="bold blue",
     box=box.ROUNDED,
     expand=True
@@ -38,7 +38,7 @@ layout["main"].update(conversation_panel)
 
 def update_conversation(transcription, response):
     global conversation_history
-    user_message = Text(f"Mauro: {transcription}\n", style="bold green")
+    user_message = Text(f"User: {transcription}\n", style="bold green")
     ai_message = Text(f"AI: {response}\n", style="bold blue")
     conversation_history.append(user_message)
     conversation_history.append(Text("\n"))
@@ -50,7 +50,7 @@ def update_conversation(transcription, response):
 
     conversation_panel = Panel(
         conversation_text,
-        title="Conversación",
+        title="Conversation",
         border_style="cyan",
         box=box.ROUNDED,
         expand=True,

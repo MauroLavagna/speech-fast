@@ -13,22 +13,19 @@ from config import ELEVENLABS_API_KEY, VOICE_ID, SAMPLE_RATE, MAX_AUDIO_FILES, W
 import threading
 import globals as glob
 
-# Inicializar el procesador y modelo de Whisper globalmente
 processor = WhisperProcessor.from_pretrained(WHISPER_MODEL)
 whisper_model = WhisperForConditionalGeneration.from_pretrained(WHISPER_MODEL)
 whisper_model.config.forced_decoder_ids = None
 
-# Mover el modelo a GPU si está disponible
 device = "cuda" if torch.cuda.is_available() else "cpu"
 whisper_model = whisper_model.to(device)
 
-# Cola para almacenar respuestas de texto
 text_queue = Queue()
 
 
 def generate_audio(text, filename):
     if len(text) > 2500:
-        raise ValueError("El texto excede el límite de 2500 caracteres.")
+        raise ValueError("The text exceeds 2500 characters.")
     
     url = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
     headers = {
@@ -47,11 +44,10 @@ def generate_audio(text, filename):
     
     response = requests.post(url, json=data, headers=headers)
     if response.status_code == 200:
-        # Convertir MP3 a WAV y guardar en la carpeta del script
         audio = AudioSegment.from_mp3(io.BytesIO(response.content))
         audio.export(filename, format="wav")
     else:
-        print(f"Error al generar audio: {response.status_code} - {response.text}")
+        print(f"Error while generating audio: {response.status_code} - {response.text}")
 
 def play_audio_file(file_path):
     audio = AudioSegment.from_wav(file_path)
@@ -81,16 +77,15 @@ def play_audio():
                         if os.path.exists(oldest_file):
                             os.remove(oldest_file)
                 else:
-                    print("El archivo de audio está vacío.")
+                    print("The audio file is empty")
                     os.remove(new_audio)
             else:
-                print(f"No se pudo generar el archivo de audio: {new_audio}")
+                print(f"Couldn't generate audio: {new_audio}")
         except Exception as e:
-            print(f"Error en play_audio: {e}")
+            print(f"Error in play_audio: {e}")
             import traceback
             traceback.print_exc()
 
-    # Limpiar los archivos de audio restantes al finalizar
     for audio_file in audio_files:
         if os.path.exists(audio_file):
             os.remove(audio_file)
@@ -105,8 +100,8 @@ def record_audio():
     if len(audio_data) > 0:
         return np.concatenate(audio_data)
     else:
-        print("No se grabó ningún audio.")
-        return np.array([])  # Devuelve un array vacío si no se grabó nada
+        print("Audio wasn't recorded.")
+        return np.array([])
 
 
 def process_audio_with_whisper(audio):

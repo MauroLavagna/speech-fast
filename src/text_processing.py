@@ -7,7 +7,7 @@ def generate_new_message(transcription):
             "content": {
                 "parts": [
                     {
-                        "text": f"Responde siempre en el lenguaje que te habla el usuario. No respondas con simbolos ni caracteres extraños. No uses asteriscos. User: {transcription}"
+                        "text": f"Always respond in the language the user speaks to you in. Do not respond with symbols or strange characters. Do not use asterisks. User: {transcription}"
                     }
                 ]
             }
@@ -27,5 +27,5 @@ def process_transcription(transcription, script):
         response = model.generate_content(content_messages)
         return response.text
     except Exception as e:
-        print(f"Error en process_transcription: {e}")
+        print(f"Error in process_transcription: {e}")
         return ""

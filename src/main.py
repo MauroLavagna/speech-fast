@@ -19,10 +19,10 @@ def main_loop():
             try:
                 audio = record_audio()
                 transcription = process_audio_with_whisper(audio)
-                print(f"Transcripción: {transcription}")
+                print(f"Transcription: {transcription}")
                 
                 response_text = process_transcription(transcription, script)
-                print(f"Respuesta de FLASH: {response_text}")
+                print(f"Flash answer: {response_text}")
 
                 update_conversation(transcription, response_text)
                 text_queue.put(response_text)
@@ -40,7 +40,7 @@ def main_loop():
                     }
                 )
             except Exception as e:
-                print(f"Error durante la grabación/procesamiento: {e}")
+                print(f"Error while recording/processing: {e}")
                 import traceback
                 traceback.print_exc()
         
@@ -56,7 +56,7 @@ if __name__ == '__main__':
         with Live(layout, refresh_per_second=4, screen=True):
             main_loop()
     except KeyboardInterrupt:
-        print("Deteniendo el programa...")
+        print("Stopping program...")
     finally:
         global_vars.running = False
         text_queue.put(None)
