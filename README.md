@@ -15,34 +15,23 @@ This AI Voice Assistant is a Python-based application that combines speech recog
 
 Before you begin, ensure you have met the following requirements:
 
-- Python 3.7+
+- Python 3.9+
 - pip (Python package manager)
 
 ## Installation
 
 1. Clone the repository:
    ```
-   git clone https://github.com/your-username/ai-voice-assistant.git
-   cd ai-voice-assistant
-   ```
+   git clone https://github.com/MauroLavagna/speech-fast.git
+   cd speech-fast
+   ``` 
 
-2. Create and activate a Python virtual environment:
-   ```
-   # On Windows
-   python -m venv venv
-   venv\Scripts\activate
-
-   # On macOS and Linux
-   python3 -m venv venv
-   source venv/bin/activate
-   ```
-
-3. Install the required dependencies:
+2. Install the required dependencies:
    ```
    pip install -r requirements.txt
    ```
 
-4. Set up environment variables:
+3. Set up environment variables:
    - Copy the `.env.example` file to `.env`
    - Fill in your API keys and other configuration values in the `.env` file
 
